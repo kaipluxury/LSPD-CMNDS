@@ -92,49 +92,107 @@
     .copy-btn:hover {
       background-color: #008fcc;
     }
-    
-    /* Search Box */
-    .search-container {
-      margin: 20px auto;
-      max-width: 600px;
-      position: relative;
+  </style>
+  <script>
+    function copyText(button, text) {
+      const el = document.createElement("textarea");
+      el.value = text;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand("copy");
+      document.body.removeChild(el);
+
+      const original = button.innerText;
+      button.innerText = "Copied!";
+      button.disabled = true;
+      setTimeout(() => {
+        button.innerText = original;
+        button.disabled = false;
+      }, 1500);
     }
-    
-    #commandSearch {
-      width: 100%;
-      padding: 12px 20px;
-      border: 2px solid #00aaff;
-      border-radius: 25px;
-      background-color: rgba(26, 26, 26, 0.8);
-      color: white;
-      font-size: 16px;
-      outline: none;
-    }
-    
-    #commandSearch::placeholder {
-      color: #aaa;
-    }
-    
-    /* Visitor Counter */
-    .visitor-counter {
+  </script>
+
+  <style>
+    .theme-toggle {
       position: fixed;
-      bottom: 10px;
-      left: 10px;
-      background: rgba(0, 170, 255, 0.2);
-      padding: 5px 10px;
-      border-radius: 15px;
-      font-size: 12px;
-      z-index: 100;
+      top: 20px;
+      right: 20px;
+      background: #00aaff;
+      color: #000;
+      border: none;
+      padding: 8px 12px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 9999;
     }
-    
-    /* No Results Message */
-    .no-results {
-      text-align: center;
-      padding: 20px;
-      color: #aaa;
-      display: none;
+
+    .light-theme {
+      background: #f5f5f5;
+      color: #111;
+    }
+
+    .light-theme h2 {
+      color: #005577;
+      border-color: #005577;
+    }
+
+    .light-theme .command {
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+    }
+
+    .light-theme .command:hover {
+      background-color: #eaeaea;
+    }
+
+    .light-theme .copy-btn {
+      background-color: #005577;
+      color: #fff;
+    }
+
+    .light-theme .copy-btn:hover {
+      background-color: #003f5c;
+    }
+
+    .light-theme .theme-toggle {
+      background-color: #005577;
+      color: #fff;
     }
   </style>
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('light-theme');
+    }
+  </script>
+
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  .command-box {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .command-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  }
+
+  button.copy-btn {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  button.copy-btn:hover {
+    background-color: #007bff;
+    color: white;
+  }
+</style>
 </head>
 
 <body style="scroll-behavior: smooth;">
@@ -147,22 +205,6 @@
     <div class="logo">
       <img src="https://raw.githubusercontent.com/kaipluxury/Website2/refs/heads/main/unnamed.png" alt="LSPD Logo">
     </div>
-    
-    <!-- Search Box -->
-    <div class="search-container">
-      <input type="text" id="commandSearch" placeholder="🔍 Search commands...">
-    </div>
-    
-    <!-- No Results Message -->
-    <div id="noResults" class="no-results">
-      No commands found matching your search.
-    </div>
-
-    <!-- Visitor Counter -->
-    <div class="visitor-counter">
-      Visitors: <span id="visitorCount">0</span>
-    </div>
-
 <h2>Contract Signing ( Human Resource )</h2>
 <div class="command"><span>/me hands over the LSPD employment contract and code of conduct to [name of recruit] with a pen</span><button class="copy-btn" onclick="copyText(this, '/me hands over the LSPD employment contract and code of conduct to [name of recruit] with a pen')">Copy</button></div>
 <h2>Contract Signing ( Player )</h2>
@@ -389,65 +431,7 @@
         },
         "retina_detect": true
       });
-      
-      // Initialize visitor counter
-      updateVisitorCount();
-      
-      // Initialize search functionality
-      setupSearch();
     });
-    
-    function toggleTheme() {
-      document.body.classList.toggle('light-theme');
-      localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
-    }
-    
-    // Check saved theme preference on load
-    if (localStorage.getItem('theme') === 'light') {
-      document.body.classList.add('light-theme');
-    }
-    
-    function copyText(button, text) {
-      const el = document.createElement("textarea");
-      el.value = text;
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand("copy");
-      document.body.removeChild(el);
-      
-      const original = button.innerText;
-      button.innerText = "Copied!";
-      button.disabled = true;
-      setTimeout(() => {
-        button.innerText = original;
-        button.disabled = false;
-      }, 1500);
-    }
-    
-    // Visitor Counter Functionality
-    function updateVisitorCount() {
-      // For a real implementation, you would need server-side code or a third-party service
-      // This is a simple localStorage-based counter for demonstration
-      let count = localStorage.getItem('visitorCount') || 0;
-      count = parseInt(count) + 1;
-      localStorage.setItem('visitorCount', count);
-      document.getElementById('visitorCount').textContent = count;
-      
-      // For a more accurate count, you would need to use:
-      // 1. A server-side database
-      // 2. A third-party analytics service (Google Analytics, etc.)
-      // 3. A serverless function (AWS Lambda, Firebase, etc.)
-    }
-    
-    // Search Functionality
-    function setupSearch() {
-      const searchInput = document.getElementById('commandSearch');
-      const noResults = document.getElementById('noResults');
-      
-      searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        let hasResults = false;
-        
-        document.querySelectorAll('.command').forEach(command => {
-          const text = command.querySelector('span').textContent.toLowerCase();
-          if (text.includes(searchTerm
+  </script>
+</body>
+</html>
