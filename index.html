@@ -4,39 +4,20 @@
   <meta charset="UTF-8">
   <title>LSPD Commands (Copy Confirm)</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      height: 100%;
-      scroll-behavior: smooth;
+    body {
       font-family: 'Segoe UI', sans-serif;
-      color: #f0f0f0;
       background: linear-gradient(135deg, #0f0f0f, #1a1a1a, #0f0f0f);
       background-size: 400% 400%;
       animation: gradientBG 20s ease infinite;
-      transition: background-color 0.4s ease, color 0.4s ease;
+      color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
     }
 
     @keyframes gradientBG {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
-    }
-
-    canvas#particleCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-    }
-
-    .logo, h2, .command, .theme-toggle, footer {
-      position: relative;
-      z-index: 2;
     }
 
     .logo {
@@ -93,9 +74,28 @@
 
     .copy-btn:hover {
       background-color: #008fcc;
-      color: white;
     }
+  </style>
+  <script>
+    function copyText(button, text) {
+      const el = document.createElement("textarea");
+      el.value = text;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand("copy");
+      document.body.removeChild(el);
 
+      const original = button.innerText;
+      button.innerText = "Copied!";
+      button.disabled = true;
+      setTimeout(() => {
+        button.innerText = original;
+        button.disabled = false;
+      }, 1500);
+    }
+  </script>
+
+  <style>
     .theme-toggle {
       position: fixed;
       top: 20px;
@@ -142,101 +142,160 @@
       background-color: #005577;
       color: #fff;
     }
-
-    footer {
-      text-align: center;
-      margin-top: 50px;
-      font-size: 14px;
-      color: #aaa;
-    }
   </style>
-
   <script>
-    function copyText(button, text) {
-      const el = document.createElement("textarea");
-      el.value = text;
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand("copy");
-      document.body.removeChild(el);
-
-      const original = button.innerText;
-      button.innerText = "Copied!";
-      button.disabled = true;
-      setTimeout(() => {
-        button.innerText = original;
-        button.disabled = false;
-      }, 1500);
-    }
-
     function toggleTheme() {
       document.body.classList.toggle('light-theme');
     }
-
-    // Particle background animation
-    window.onload = function () {
-      const canvas = document.getElementById("particleCanvas");
-      const ctx = canvas.getContext("2d");
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      let particles = [];
-
-      for (let i = 0; i < 70; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          radius: Math.random() * 2 + 1,
-          dx: (Math.random() - 0.5) * 0.6,
-          dy: (Math.random() - 0.5) * 0.6,
-          opacity: Math.random() * 0.5 + 0.3
-        });
-      }
-
-      function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let p of particles) {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(0, 170, 255, ${p.opacity})`;
-          ctx.shadowColor = "#00aaff";
-          ctx.shadowBlur = 5;
-          ctx.fill();
-        }
-        update();
-      }
-
-      function update() {
-        for (let p of particles) {
-          p.x += p.dx;
-          p.y += p.dy;
-
-          if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-          if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-        }
-        requestAnimationFrame(draw);
-      }
-
-      draw();
-
-      window.addEventListener("resize", () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      });
-    }
   </script>
+
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  .command-box {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .command-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  }
+
+  button.copy-btn {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  button.copy-btn:hover {
+    background-color: #007bff;
+    color: white;
+  }
+</style>
 </head>
 
-<body>
-  <canvas id="particleCanvas"></canvas>
-  <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+<body style="scroll-behavior: smooth;">
+  <button class='theme-toggle' onclick='toggleTheme()'>Toggle Theme</button>
 
-  <!-- Your entire HTML content goes here below (the LSPD sections) -->
+  <div class="logo">
+    <img src="https://raw.githubusercontent.com/kaipluxury/Website2/refs/heads/main/unnamed.png" alt="LSPD Logo">
+  </div>
+<h2>Contract Signing ( Human Resource )</h2>
+<div class="command"><span>/me hands over the LSPD employment contract and code of conduct to [name of recruit] with a pen</span><button class="copy-btn" onclick="copyText(this, '/me hands over the LSPD employment contract and code of conduct to [name of recruit] with a pen')">Copy</button></div>
+<h2>Contract Signing ( Player )</h2>
+<div class="command"><span>/me takes the LSPD employment contract and code of conduct</span><button class="copy-btn" onclick="copyText(this, '/me takes the LSPD employment contract and code of conduct')">Copy</button></div>
+<div class="command"><span>/do signs the LSPD employment contract</span><button class="copy-btn" onclick="copyText(this, '/do signs the LSPD employment contract')">Copy</button></div>
+<div class="command"><span>/do signs the code of conduct</span><button class="copy-btn" onclick="copyText(this, '/do signs the code of conduct')">Copy</button></div>
+<div class="command"><span>/me hands back the LSPD employment contract and code of conduct</span><button class="copy-btn" onclick="copyText(this, '/me hands back the LSPD employment contract and code of conduct')">Copy</button></div>
+<h2>Before Starting Shift</h2>
+<div class="command"><span>/me takes out bulletproof/waterproof bodycam, turns it on and checks for red light</span><button class="copy-btn" onclick="copyText(this, '/me takes out bulletproof/waterproof bodycam, turns it on and checks for red light')">Copy</button></div>
+<div class="command"><span>/do Bodycam is recording</span><button class="copy-btn" onclick="copyText(this, '/do Bodycam is recording')">Copy</button></div>
+<div class="command"><span>/me connects the PDA to the nearby cell tower of LSPD</span><button class="copy-btn" onclick="copyText(this, '/me connects the PDA to the nearby cell tower of LSPD')">Copy</button></div>
+<h2>Refreshing Bodycam</h2>
+<div class="command"><span>/me refreshes bulletproof/waterproof bodycam</span><button class="copy-btn" onclick="copyText(this, '/me refreshes bulletproof/waterproof bodycam')">Copy</button></div>
+<div class="command"><span>/do bodycam is recording</span><button class="copy-btn" onclick="copyText(this, '/do bodycam is recording')">Copy</button></div>
+<h2>Saving Bodycam</h2>
+<div class="command"><span>/me saves bodycam contents onto an SD card, then uploads SD to LSPD cloud servers using PDA</span><button class="copy-btn" onclick="copyText(this, '/me saves bodycam contents onto an SD card, then uploads SD to LSPD cloud servers using PDA')">Copy</button></div>
+<div class="command"><span>/do bodycam refreshes and continues recording</span><button class="copy-btn" onclick="copyText(this, '/do bodycam refreshes and continues recording')">Copy</button></div>
+<h2>Handing SSD to Lawyer</h2>
+<div class="command"><span>/do saves bodycam onto an SD Card and uploads into PDA to LSPD Cloud servers and continues recording</span><button class="copy-btn" onclick="copyText(this, '/do saves bodycam onto an SD Card and uploads into PDA to LSPD Cloud servers and continues recording')">Copy</button></div>
+<div class="command"><span>/me downloads bodycam onto USB stick using PDA and then hands over USB stick to Attorney</span><button class="copy-btn" onclick="copyText(this, '/me downloads bodycam onto USB stick using PDA and then hands over USB stick to Attorney')">Copy</button></div>
+<h2>Finishing Your Shift</h2>
+<div class="command"><span>/me takes out an SD card from the bodycam, puts it in the phone and uploads it to the LSPD servers</span><button class="copy-btn" onclick="copyText(this, '/me takes out an SD card from the bodycam, puts it in the phone and uploads it to the LSPD servers')">Copy</button></div>
+<div class="command"><span>/me puts an ID Badge inside the locker until the next shift</span><button class="copy-btn" onclick="copyText(this, '/me puts an ID Badge inside the locker until the next shift')">Copy</button></div>
+<h2>Drone Commands</h2>
+<div class="command"><span>/me launches the LSPD Drone</span><button class="copy-btn" onclick="copyText(this, '/me launches the LSPD Drone')">Copy</button></div>
+<h2>Drone Commands ( UnderCover )</h2>
+<div class="command"><span>/me takes the LSPD drone from the trunk and puts it in the backpack</span><button class="copy-btn" onclick="copyText(this, '/me takes the LSPD drone from the trunk and puts it in the backpack')">Copy</button></div>
+<div class="command"><span>/me takes the LSPD drone from the backpack and launches it</span><button class="copy-btn" onclick="copyText(this, '/me takes the LSPD drone from the backpack and launches it')">Copy</button></div>
+<div class="command"><span>/me takes the LSPD drone from the ground and puts it in the backpack</span><button class="copy-btn" onclick="copyText(this, '/me takes the LSPD drone from the ground and puts it in the backpack')">Copy</button></div>
+<h2>⚖️ DOJ Related</h2>
+<div class="command"><span>LSPD to DOJ: How copy?</span><button class="copy-btn" onclick="copyText(this, 'LSPD to DOJ: How copy?')">Copy</button></div>
+<div class="command"><span>LSPD to DOJ: Good copy, send traffic!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to DOJ: Good copy, send traffic!')">Copy</button></div>
+<div class="command"><span>LSPD to DOJ: Bad copy!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to DOJ: Bad copy!')">Copy</button></div>
+<div class="command"><span>LSPD to DOJ: Bad copy, we&#x27;re currently in a situation!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to DOJ: Bad copy, we\'re currently in a situation!')">Copy</button></div>
+<div class="command"><span>LSPD to DOJ: We have a 10-15 at DOC requesting a lawyer. Are there any available?</span><button class="copy-btn" onclick="copyText(this, 'LSPD to DOJ: We have a 10-15 at DOC requesting a lawyer. Are there any available?')">Copy</button></div>
+<div class="command"><span>LSPD to DOJ: 10-4, much appreciated!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to DOJ: 10-4, much appreciated!')">Copy</button></div>
+<h2>👮‍♂️ LSPD to FIB Related</h2>
+<div class="command"><span>LSPD to FIB: How copy?</span><button class="copy-btn" onclick="copyText(this, 'LSPD to FIB: How copy?')">Copy</button></div>
+<div class="command"><span>LSPD to FIB: Good copy, send traffic!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to FIB: Good copy, send traffic!')">Copy</button></div>
+<div class="command"><span>LSPD to FIB: Bad copy!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to FIB: Bad copy!')">Copy</button></div>
+<div class="command"><span>LSPD to FIB: Bad copy, we&#x27;re currently in a situation!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to FIB: Bad copy, we\'re currently in a situation!')">Copy</button></div>
+<div class="command"><span>LSPD to FIB: Can we have a quick meeting at your HQ?</span><button class="copy-btn" onclick="copyText(this, 'LSPD to FIB: Can we have a quick meeting at your HQ?')">Copy</button></div>
+<div class="command"><span>LSPD to FIB: Requesting permission to land at your helipad.</span><button class="copy-btn" onclick="copyText(this, 'LSPD to FIB: Requesting permission to land at your helipad.')">Copy</button></div>
+<div class="command"><span>LSPD to FIB: We are entering your jurisdiction in chase of a car hijacker, help would be appreciated.</span><button class="copy-btn" onclick="copyText(this, 'LSPD to FIB: We are entering your jurisdiction in chase of a car hijacker, help would be appreciated.')">Copy</button></div>
+<div class="command"><span>LSPD to FIB: We have one of your agents in custody, could you 10-17 to DOC?</span><button class="copy-btn" onclick="copyText(this, 'LSPD to FIB: We have one of your agents in custody, could you 10-17 to DOC?')">Copy</button></div>
+<div class="command"><span>LSPD to FIB: We&#x27;re currently enroute!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to FIB: We\'re currently enroute!')">Copy</button></div>
+<div class="command"><span>LSPD to FIB: 10-4, much appreciated!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to FIB: 10-4, much appreciated!')">Copy</button></div>
+<div class="command"><span>LSPD to FIB: Permission granted!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to FIB: Permission granted!')">Copy</button></div>
+<h2>🚓 LSPD to SAHP Related</h2>
+<div class="command"><span>LSPD to SAHP: How copy?</span><button class="copy-btn" onclick="copyText(this, 'LSPD to SAHP: How copy?')">Copy</button></div>
+<div class="command"><span>LSPD to SAHP: Good copy, send traffic!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to SAHP: Good copy, send traffic!')">Copy</button></div>
+<div class="command"><span>LSPD to SAHP: Bad copy!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to SAHP: Bad copy!')">Copy</button></div>
+<div class="command"><span>LSPD to SAHP: Bad copy, we&#x27;re currently in a situation!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to SAHP: Bad copy, we\'re currently in a situation!')">Copy</button></div>
+<div class="command"><span>LSPD to SAHP: Can we have a quick meeting at your HQ? (a.k.a. &quot;hall&quot;)</span><button class="copy-btn" onclick="copyText(this, 'LSPD to SAHP: Can we have a quick meeting at your HQ? (a.k.a. "hall")')">Copy</button></div>
+<div class="command"><span>LSPD to SAHP: Requesting permission to land at your helipad.</span><button class="copy-btn" onclick="copyText(this, 'LSPD to SAHP: Requesting permission to land at your helipad.')">Copy</button></div>
+<div class="command"><span>LSPD to SAHP: We have one of your agents in custody, could you 10-17 to DOC?</span><button class="copy-btn" onclick="copyText(this, 'LSPD to SAHP: We have one of your agents in custody, could you 10-17 to DOC?')">Copy</button></div>
+<div class="command"><span>LSPD to SAHP: We&#x27;re currently enroute!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to SAHP: We\'re currently enroute!')">Copy</button></div>
+<div class="command"><span>LSPD to SAHP: Troopers enroute!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to SAHP: Troopers enroute!')">Copy</button></div>
+<div class="command"><span>LSPD to SAHP: 10-4, much appreciated!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to SAHP: 10-4, much appreciated!')">Copy</button></div>
+<div class="command"><span>LSPD to SAHP: Permission granted!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to SAHP: Permission granted!')">Copy</button></div>
+<h2>🙍‍♂️ LSPD to NG Related</h2>
+<div class="command"><span>LSPD to NG: How copy?</span><button class="copy-btn" onclick="copyText(this, 'LSPD to NG: How copy?')">Copy</button></div>
+<div class="command"><span>LSPD to NG: Good copy, send traffic!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to NG: Good copy, send traffic!')">Copy</button></div>
+<div class="command"><span>LSPD to NG: Bad copy!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to NG: Bad copy!')">Copy</button></div>
+<div class="command"><span>LSPD to NG: Bad copy, we&#x27;re currently in a situation!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to NG: Bad copy, we\'re currently in a situation!')">Copy</button></div>
+<div class="command"><span>LSPD to NG: Can we have a quick meeting at your main barracks?</span><button class="copy-btn" onclick="copyText(this, 'LSPD to NG: Can we have a quick meeting at your main barracks?')">Copy</button></div>
+<div class="command"><span>LSPD to NG: Requesting permission to land at your main barracks.</span><button class="copy-btn" onclick="copyText(this, 'LSPD to NG: Requesting permission to land at your main barracks.')">Copy</button></div>
+<div class="command"><span>LSPD to NG: We have one of your soldiers in custody, could you 10-17 to DOC?</span><button class="copy-btn" onclick="copyText(this, 'LSPD to NG: We have one of your soldiers in custody, could you 10-17 to DOC?')">Copy</button></div>
+<div class="command"><span>LSPD to NG: We&#x27;re currently enroute!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to NG: We\'re currently enroute!')">Copy</button></div>
+<div class="command"><span>LSPD to NG: 10-4, much appreciated!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to NG: 10-4, much appreciated!')">Copy</button></div>
+<div class="command"><span>LSPD to NG: Permission granted!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to NG: Permission granted!')">Copy</button></div>
+<h2>👨‍⚕️ LSPD to EMS Related</h2>
+<div class="command"><span>LSPD to EMS: How copy?</span><button class="copy-btn" onclick="copyText(this, 'LSPD to EMS: How copy?')">Copy</button></div>
+<div class="command"><span>LSPD to EMS: Good copy, send traffic!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to EMS: Good copy, send traffic!')">Copy</button></div>
+<div class="command"><span>LSPD to EMS: Bad copy!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to EMS: Bad copy!')">Copy</button></div>
+<div class="command"><span>LSPD to EMS: Bad copy, we&#x27;re currently in a situation!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to EMS: Bad copy, we\'re currently in a situation!')">Copy</button></div>
+<div class="command"><span>LSPD to EMS: Ghetto is off limits for the next 25 minutes, please inform all your units.</span><button class="copy-btn" onclick="copyText(this, 'LSPD to EMS: Ghetto is off limits for the next 25 minutes, please inform all your units.')">Copy</button></div>
+<div class="command"><span>LSPD to EMS: Can we have a quick meeting at Pillbox Hospital?</span><button class="copy-btn" onclick="copyText(this, 'LSPD to EMS: Can we have a quick meeting at Pillbox Hospital?')">Copy</button></div>
+<div class="command"><span>LSPD to EMS: Requesting permission to land at your helipad.</span><button class="copy-btn" onclick="copyText(this, 'LSPD to EMS: Requesting permission to land at your helipad.')">Copy</button></div>
+<div class="command"><span>LSPD to EMS: We have one of your employees in custody, could you 10-17 to DOC?</span><button class="copy-btn" onclick="copyText(this, 'LSPD to EMS: We have one of your employees in custody, could you 10-17 to DOC?')">Copy</button></div>
+<div class="command"><span>LSPD to EMS: We&#x27;re currently enroute!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to EMS: We\'re currently enroute!')">Copy</button></div>
+<div class="command"><span>LSPD to EMS: Clean!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to EMS: Clean!')">Copy</button></div>
+<div class="command"><span>LSPD to EMS: 10-4, much appreciated!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to EMS: 10-4, much appreciated!')">Copy</button></div>
+<div class="command"><span>LSPD to EMS: Permission granted!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to EMS: Permission granted!')">Copy</button></div>
+<h2>🏛️ LSPD to GOV Related</h2>
+<div class="command"><span>LSPD to GOV: How copy?</span><button class="copy-btn" onclick="copyText(this, 'LSPD to GOV: How copy?')">Copy</button></div>
+<div class="command"><span>LSPD to GOV: Good copy, send traffic!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to GOV: Good copy, send traffic!')">Copy</button></div>
+<div class="command"><span>LSPD to GOV: Bad copy!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to GOV: Bad copy!')">Copy</button></div>
+<div class="command"><span>LSPD to GOV: Bad copy, we&#x27;re currently in a situation!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to GOV: Bad copy, we\'re currently in a situation!')">Copy</button></div>
+<div class="command"><span>LSPD to GOV: Agents enroute!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to GOV: Agents enroute!')">Copy</button></div>
+<div class="command"><span>LSPD to GOV: Can we have a quick meeting at Capitol?</span><button class="copy-btn" onclick="copyText(this, 'LSPD to GOV: Can we have a quick meeting at Capitol?')">Copy</button></div>
+<div class="command"><span>LSPD to GOV: Requesting permission to land on your lawn.</span><button class="copy-btn" onclick="copyText(this, 'LSPD to GOV: Requesting permission to land on your lawn.')">Copy</button></div>
+<div class="command"><span>LSPD to GOV: We have one of your units in custody, could you 10-17 to DOC?</span><button class="copy-btn" onclick="copyText(this, 'LSPD to GOV: We have one of your units in custody, could you 10-17 to DOC?')">Copy</button></div>
+<div class="command"><span>LSPD to GOV: 10-4, much appreciated!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to GOV: 10-4, much appreciated!')">Copy</button></div>
+<h2>🚨 LSPD to GLOBAL Related</h2>
+<div class="command"><span>LSPD to GLOBAL: What’s the situation?</span><button class="copy-btn" onclick="copyText(this, 'LSPD to GLOBAL: What’s the situation?')">Copy</button></div>
+<div class="command"><span>LSPD to ALL: Global is for regrouping for latest store robbery. Please dispatch max units.</span><button class="copy-btn" onclick="copyText(this, 'LSPD to ALL: Global is for regrouping for latest store robbery. Please dispatch max units.')">Copy</button></div>
+<div class="command"><span>LSPD to ALL: Global is for regrouping for the Spec Ops. Send max units!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to ALL: Global is for regrouping for the Spec Ops. Send max units!')">Copy</button></div>
+<div class="command"><span>LSPD to ALL: Global is for hacker attack. Send max units!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to ALL: Global is for hacker attack. Send max units!')">Copy</button></div>
+<div class="command"><span>LSPD to ALL: Global is for heavy 10-10s. Send all available units!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to ALL: Global is for heavy 10-10s. Send all available units!')">Copy</button></div>
+<div class="command"><span>LSPD to ALL: Global is for a hood watch. Send all available units!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to ALL: Global is for a hood watch. Send all available units!')">Copy</button></div>
+<div class="command"><span>LSPD to ALL: Global is the First/Second/Last Location of Hood Watch — feel free to join!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to ALL: Global is the First/Second/Last Location of Hood Watch — feel free to join!')">Copy</button></div>
+<div class="command"><span>LSPD to ALL: Global is for a checkpoint. Everyone is invited!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to ALL: Global is for a checkpoint. Everyone is invited!')">Copy</button></div>
+<div class="command"><span>LSPD to ALL: Be on standby for a possible hostage situation!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to ALL: Be on standby for a possible hostage situation!')">Copy</button></div>
+<div class="command"><span>LSPD to ALL: Global is for hostage situation. Send max units!!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to ALL: Global is for hostage situation. Send max units!!')">Copy</button></div>
+<div class="command"><span>LSPD to ALL: Global is for hostage situation. Send max units at Legion for regrouping!!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to ALL: Global is for hostage situation. Send max units at Legion for regrouping!!')">Copy</button></div>
+<div class="command"><span>LSPD to ALL: Federals is getting robbed at Global. Send all available units!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to ALL: Federals is getting robbed at Global. Send all available units!')">Copy</button></div>
+<div class="command"><span>LSPD to ALL: The Global is 10-99.</span><button class="copy-btn" onclick="copyText(this, 'LSPD to ALL: The Global is 10-99.')">Copy</button></div>
+<div class="command"><span>LSPD to ALL: Watch out! Heavy gang activity near DOC highway. Inform all your units to be safe!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to ALL: Watch out! Heavy gang activity near DOC highway. Inform all your units to be safe!')">Copy</button></div>
+<div class="command"><span>LSPD to ALL: Gang cars have been spotted near FZ. Be ready for possible FZ raid!</span><button class="copy-btn" onclick="copyText(this, 'LSPD to ALL: Gang cars have been spotted near FZ. Be ready for possible FZ raid!')">Copy</button></div>
 
-  <!-- ⚠️ Paste your full existing body content (commands, sections, etc.) here just as it is -->
-
-  <footer>
+  <footer style="text-align: center; margin-top: 50px; font-size: 14px; color: #aaa;">
     Made By <strong>Ezio DeCosta</strong>
   </footer>
-</body>
-</html>
+</body></html>
